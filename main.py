@@ -78,8 +78,9 @@ class MarketingAnalysis:
         # fit model on all training data
         model = xgb.XGBClassifier()
         model.fit(X_train, y_train)
-        for col, score in zip(X_train.columns, model.feature_importances_):
-            print("feature_importance",col, score)
+        importances = list(zip(model.feature_importances_, data.columns))
+        importances.sort(reverse=True)
+        print("feature_importance",importances)
         y_pred = model.predict(X_test)
         accuracy = accuracy_score(y_test, y_pred)
         return accuracy
